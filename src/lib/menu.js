@@ -1,2 +1,0 @@
-const key = {};
-export {key};

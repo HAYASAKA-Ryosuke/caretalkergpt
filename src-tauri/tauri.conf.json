@@ -17,6 +17,9 @@
     },
     "allowlist": {
       "all": false,
+      "http": {
+        "scope": ["https://api.openai.com/v1/*"]
+      },
       "window": {
         "close": false,
         "maximize": false,
