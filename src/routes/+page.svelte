@@ -40,12 +40,60 @@
   }
 </script>
 
-<div on:dragend={handleMousemove}>
-  <p>{responseText}</p>
-  <img src="/vite.svg" width="100px" />
-  <input bind:value={text}>
-  <button on:click={send}>send</button>
+<div data-tauri-drag-region class="container" on:dragend={handleMousemove}>
+  <div data-tauri-drag-region class="characterMessageBox">
+    <img src="/charactor.png" width="100px" />
+    <p class="talk">{responseText}</p>
+  </div>
+  <div data-tauri-drag-region class="sendMessageBox">
+    <input bind:value={text}>
+    <button on:click={send}>send</button>
+  </div>
 </div>
 
 <style>
+
+.container {
+  flex-direction: column;
+  display: flex;
+  background-size: 100%
+}
+
+.sendMessageBox {
+  align-items: stretch;
+  margin: 10px;
+  padding: 10px;
+}
+
+.characterMessageBox {
+  display: flex;
+}
+
+.talk {
+  position: relative;
+  display: inline-block;
+  margin: 1.5em 0 1.5em 15px;
+  padding: 15px 10px;
+  min-width: 120px;
+  max-width: 100%;
+  color: #555;
+  font-size: 16px;
+  background: #e0edff;
+  box-sizing: border-box;
+  border-radius: 15px;
+}
+
+.talk:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -29px;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-right: 15px solid #e0edff;
+}
+.talk p {
+  margin: 0;
+  padding: 0;
+}
 </style>
