@@ -5,6 +5,10 @@
 
   let text = '';
   let responseText = '';
+  /**
+   * @type {{ role: string; content: string; }[]}
+   */
+  let messages = [];
   let API_KEY = 'API_KEY'
 
   async function handleMousemove(event) {
@@ -17,13 +21,15 @@
 	}
 
   async function send() {
+    const message = {
+        role: "user",
+        content: text
+    };
+    messages.push(message);
     const client = await getClient();
     const body = Body.json({
       model: "gpt-3.5-turbo",
-      messages: [{
-        role: "user",
-        content: text
-      }]
+      messages: messages,
     });
     const headers = {
       headers: {Authorization: `Bearer ${API_KEY}`},
@@ -34,15 +40,16 @@
       headers
     );
     if (response.ok) {
-      console.log(response.data.choices[0].message.content);
       responseText = response.data.choices[0].message.content;
+      messages.push(response.data.choices[0].message);
     }
+    console.log(messages)
   }
 </script>
 
-<div data-tauri-drag-region class="container" on:dragend={handleMousemove}>
+<div data-tauri-drag-region class="container">
   <div data-tauri-drag-region class="characterMessageBox">
-    <img src="/charactor.png" width="100px" />
+    <img src="/charactor.png" height="100px" width="100px" />
     <p class="talk">{responseText}</p>
   </div>
   <div data-tauri-drag-region class="sendMessageBox">
@@ -67,6 +74,7 @@
 
 .characterMessageBox {
   display: flex;
+  align-items: center;
 }
 
 .talk {
@@ -75,6 +83,7 @@
   margin: 1.5em 0 1.5em 15px;
   padding: 15px 10px;
   min-width: 120px;
+  min-height: 50px;
   max-width: 100%;
   color: #555;
   font-size: 16px;

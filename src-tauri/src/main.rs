@@ -9,7 +9,6 @@ use enigo::MouseControllable;
 #[tauri::command]
 fn get_cursor_position() -> (i32, i32) {
     let enigo = Enigo::new();
-    println!("mouse location: {:?}", enigo.mouse_location());
     let result = enigo.mouse_location();
     result
 }
