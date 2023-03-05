@@ -33,8 +33,10 @@
       body,
       headers
     );
-    console.log(response.data.choices[0].message.content);
-    responseText = response.data.choices[0].message.content;
+    if (response.ok) {
+      console.log(response.data.choices[0].message.content);
+      responseText = response.data.choices[0].message.content;
+    }
   }
 </script>
 
